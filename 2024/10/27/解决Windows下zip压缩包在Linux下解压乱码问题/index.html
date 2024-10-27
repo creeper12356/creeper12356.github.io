@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>测试发布文章 | Creeper Blog</title>
+  <title>解决Windows下zip压缩包在Linux下解压乱码问题 | Creeper Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Creeper Blog 测试发布文章测试内容">
+  <meta name="description" content="由于编码格式的不同，在Windows下压缩的zip文件在Linux下解压后，其中中文的文件名会出现乱码。解决方式： 安装7z和convmv 1sudo apt install 7zip convmv  执行压缩后将编码从GBK转为UTF-8 12LANG&#x3D;C 7za x your-zip-file.zipconvmv -f GBK -t utf8 --notest -r .  参考：https:&#x2F;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="测试发布文章">
-<meta property="og:url" content="http://example.com/2024/07/07/%E6%B5%8B%E8%AF%95%E5%8F%91%E5%B8%83%E6%96%87%E7%AB%A0/index.html">
+<meta property="og:title" content="解决Windows下zip压缩包在Linux下解压乱码问题">
+<meta property="og:url" content="http://example.com/2024/10/27/%E8%A7%A3%E5%86%B3Windows%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E5%9C%A8Linux%E4%B8%8B%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Creeper Blog">
-<meta property="og:description" content="Creeper Blog 测试发布文章测试内容">
+<meta property="og:description" content="由于编码格式的不同，在Windows下压缩的zip文件在Linux下解压后，其中中文的文件名会出现乱码。解决方式： 安装7z和convmv 1sudo apt install 7zip convmv  执行压缩后将编码从GBK转为UTF-8 12LANG&#x3D;C 7za x your-zip-file.zipconvmv -f GBK -t utf8 --notest -r .  参考：https:&#x2F;">
 <meta property="og:locale">
-<meta property="article:published_time" content="2024-07-07T08:41:39.000Z">
-<meta property="article:modified_time" content="2024-07-07T08:42:59.213Z">
+<meta property="article:published_time" content="2024-10-27T07:55:17.000Z">
+<meta property="article:modified_time" content="2024-10-27T07:57:06.684Z">
 <meta property="article:author" content="creeper12356">
 <meta name="twitter:card" content="summary">
   
@@ -71,10 +71,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-测试发布文章" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-解决Windows下zip压缩包在Linux下解压乱码问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/07/07/%E6%B5%8B%E8%AF%95%E5%8F%91%E5%B8%83%E6%96%87%E7%AB%A0/" class="article-date">
-  <time class="dt-published" datetime="2024-07-07T08:41:39.000Z" itemprop="datePublished">2024-07-07</time>
+    <a href="/2024/10/27/%E8%A7%A3%E5%86%B3Windows%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E5%9C%A8Linux%E4%B8%8B%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-10-27T07:55:17.000Z" itemprop="datePublished">2024-10-27</time>
 </a>
     
   </div>
@@ -85,7 +85,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      测试发布文章
+      解决Windows下zip压缩包在Linux下解压乱码问题
     </h1>
   
 
@@ -93,12 +93,19 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="Creeper-Blog-测试发布文章"><a href="#Creeper-Blog-测试发布文章" class="headerlink" title="Creeper Blog 测试发布文章"></a>Creeper Blog 测试发布文章</h1><p>测试内容</p>
+        <p>由于编码格式的不同，在Windows下压缩的zip文件在Linux下解压后，其中中文的文件名会出现乱码。解决方式：</p>
+<p>安装7z和convmv</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install 7zip convmv</span><br></pre></td></tr></table></figure>
+
+<p>执行压缩后将编码从GBK转为UTF-8</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LANG=C 7za x your-zip-file.zip</span><br><span class="line">convmv -f GBK -t utf8 --notest -r .</span><br></pre></td></tr></table></figure>
+
+<p>参考：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/suiyueruge1314/article/details/90766185">https://blog.csdn.net/suiyueruge1314/article/details/90766185</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/07/07/%E6%B5%8B%E8%AF%95%E5%8F%91%E5%B8%83%E6%96%87%E7%AB%A0/" data-id="clybb1zya00007s1r3j5e1ov4" data-title="测试发布文章" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      <a data-url="http://example.com/2024/10/27/%E8%A7%A3%E5%86%B3Windows%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E5%9C%A8Linux%E4%B8%8B%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/" data-id="cm2rarilc0000yl1r5tw6c1sp" data-title="解决Windows下zip压缩包在Linux下解压乱码问题" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
       
       
       
@@ -108,15 +115,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2024/07/26/%E4%BD%BF%E7%94%A8Spring-Cloud-Feign%E6%9E%84%E5%BB%BA%E5%A3%B0%E6%98%8E%E5%BC%8F%E5%AE%A2%E6%88%B7%E7%AB%AF/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
-      <div class="article-nav-title">
-        
-          使用Spring Cloud Feign构建声明式客户端
-        
-      </div>
-    </a>
   
+    <a href="/2024/08/25/%E4%BD%BF%E7%94%A8libGDX%E7%A7%BB%E6%A4%8D20%E5%B9%B4%E5%89%8D%E7%9A%84J2ME%E6%B8%B8%E6%88%8F%E3%80%8A%E4%B8%AD%E5%9B%BD%E8%B7%B3%E6%A3%8B%E3%80%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">使用libGDX移植20年前的J2ME游戏《中国跳棋》</div>
+    </a>
   
 </nav>
 

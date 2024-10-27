@@ -69,6 +69,52 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-解决Windows下zip压缩包在Linux下解压乱码问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/10/27/%E8%A7%A3%E5%86%B3Windows%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E5%9C%A8Linux%E4%B8%8B%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-10-27T07:55:17.000Z" itemprop="datePublished">2024-10-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/10/27/%E8%A7%A3%E5%86%B3Windows%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E5%9C%A8Linux%E4%B8%8B%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/">解决Windows下zip压缩包在Linux下解压乱码问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>由于编码格式的不同，在Windows下压缩的zip文件在Linux下解压后，其中中文的文件名会出现乱码。解决方式：</p>
+<p>安装7z和convmv</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install 7zip convmv</span><br></pre></td></tr></table></figure>
+
+<p>执行压缩后将编码从GBK转为UTF-8</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LANG=C 7za x your-zip-file.zip</span><br><span class="line">convmv -f GBK -t utf8 --notest -r .</span><br></pre></td></tr></table></figure>
+
+<p>参考：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/suiyueruge1314/article/details/90766185">https://blog.csdn.net/suiyueruge1314/article/details/90766185</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/10/27/%E8%A7%A3%E5%86%B3Windows%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E5%9C%A8Linux%E4%B8%8B%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/" data-id="cm2rarilc0000yl1r5tw6c1sp" data-title="解决Windows下zip压缩包在Linux下解压乱码问题" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-使用libGDX移植20年前的J2ME游戏《中国跳棋》" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/08/25/%E4%BD%BF%E7%94%A8libGDX%E7%A7%BB%E6%A4%8D20%E5%B9%B4%E5%89%8D%E7%9A%84J2ME%E6%B8%B8%E6%88%8F%E3%80%8A%E4%B8%AD%E5%9B%BD%E8%B7%B3%E6%A3%8B%E3%80%8B/" class="article-date">
@@ -311,7 +357,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li></ul>
     </div>
   </div>
 
@@ -322,6 +368,10 @@
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2024/10/27/%E8%A7%A3%E5%86%B3Windows%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E5%9C%A8Linux%E4%B8%8B%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/">解决Windows下zip压缩包在Linux下解压乱码问题</a>
+          </li>
         
           <li>
             <a href="/2024/08/25/%E4%BD%BF%E7%94%A8libGDX%E7%A7%BB%E6%A4%8D20%E5%B9%B4%E5%89%8D%E7%9A%84J2ME%E6%B8%B8%E6%88%8F%E3%80%8A%E4%B8%AD%E5%9B%BD%E8%B7%B3%E6%A3%8B%E3%80%8B/">使用libGDX移植20年前的J2ME游戏《中国跳棋》</a>

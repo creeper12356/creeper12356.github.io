@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7" lang="zh"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8" lang="zh"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="zh"><!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>KMP算法（带解析）</title>
+
+    <meta name="author" content="creeper12356">
+
+    <link rel="shortcut icon" href="/images/favicon.png">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+
+    <link rel="canonical" href="http://example.com/2025/04/19/KMP算法（带解析）/">
+
+    
+        <link rel="alternate" href="/atom.xml" type="application/atom+xml">
+    
+
+    
+
+    
+<script src="/js/modernizr-2.0.js"></script>
+
+
+    
+<script src="/js/jquery-1.9.1.js"></script>
+
+
+    
+    <script>window.twttr = (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function(f) {
+                t._e.push(f);
+            };
+
+            return t;
+        }(document, "script", "twitter-wjs"));</script>
+
+    
+    <link rel="me" href="https://twitter.com/your_twitter">
+    
+
+
+
+    
+<script src="/js/octo.js"></script>
+
+
+    
+<link rel="stylesheet" href="/css/octo.css">
+
+
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet"
+          type="text/css">
+
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet"
+          type="text/css">
+
+    
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+
+<header role="banner">
+    <hgroup>
+        <h1><a href="/">Creeper Blog</a></h1>
+        
+    </hgroup>
+</header>
+
+<nav role="navigation">
+    
+        <ul class="subscription" data-subscription="rss">
+            <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+        </ul>
+    
+
+    <form action="https://google.com/search" method="get">
+        <fieldset role="search">
+            <input type="hidden" name="q" value="site:http://example.com/">
+            <input class="search" type="text" name="q" results="0" placeholder="Search">
+        </fieldset>
+    </form>
+
+    <ul class="main-navigation">
+        
+            <li><a href="/">Blog</a></li>
+        
+            <li><a href="/archives">Archives</a></li>
+        
+    </ul>
+</nav>
+
+
+<div id="main">
+    <div id="content">
+        <div>
+    <article class="hentry" role="article">
+        <header>
+            <h1 class="entry-title">KMP算法（带解析）</h1>
+            <p class="meta">
+                <time datetime="2025-04-19T13:39:57.000Z" data-updated="true">Sat Apr 19 2025</time>
+            </p>
+        </header>
+        <div class="entry-content">
+            <p>KMP算法是一种时间复杂度为O(n)的字符串匹配算法，可能由于其设计过于精妙，我这平庸的脑子实在无法完全理解，每次都不能完整地写出来。为了以后的复盘，我写了Leetcode<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/description/">28</a>，并在注释中加了很多自己的解析，代码仍在这里了：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计算needle的前缀表</span></span><br><span class="line"><span class="comment">     * 示例：needle = &quot;ababc&quot;</span></span><br><span class="line"><span class="comment">     * 前缀表next: [-1, 0, 0, 1, 2, 0]</span></span><br><span class="line"><span class="comment">     * next[i]表示needle[0..(i-1)]子串的最长相同前后缀长度，规定next[0] = -1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">calNext</span><span class="params">(<span class="type">const</span> string &amp;needle)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> needle_len = needle.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">next</span><span class="params">(needle_len + <span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 变量j在循环中表示上一个填入next的值</span></span><br><span class="line">        <span class="type">int</span> j = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// next[0]已经填入-1，for循环需要填入next[1..(needle_len + 1)]</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; needle_len; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 两种情况下跳出循环：</span></span><br><span class="line">            <span class="comment">// 1. j == -1 -&gt; 相当于之前的相同前后缀都作废，从头开始比较</span></span><br><span class="line">            <span class="comment">// 2. needle[i] == needle[j] (隐含j &gt;= 0) -&gt; 利用到之前的部分相同前后缀，在之前基础上比较</span></span><br><span class="line">            <span class="keyword">while</span> (j &gt;= <span class="number">0</span> &amp;&amp; needle[i] != needle[j])</span><br><span class="line">            &#123;</span><br><span class="line">                j = next[j];</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 情况1：next[i + 1]重新清0(-1 + 1 == 0)</span></span><br><span class="line">            <span class="comment">// 情况2：next[i + 1]自增为j + 1</span></span><br><span class="line">            ++j;</span><br><span class="line"></span><br><span class="line">            next[i + <span class="number">1</span>] = j;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 字符串子串匹配</span></span><br><span class="line"><span class="comment">     * 英文小知识：haystack: 干草堆，needle: 针  ，find a needle in a haystack: 大海捞针</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">strStr</span><span class="params">(string haystack, string needle)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> haystack_len = haystack.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> needle_len = needle.<span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// h_cursor为haystack指针，只增不减，最多扫描一遍haystack，保证了KMP算法的O(n)时间复杂度</span></span><br><span class="line">        <span class="comment">// n_cursor为needle指针，利用next表不断前后跳转</span></span><br><span class="line">        <span class="type">int</span> h_cursor = <span class="number">0</span>, n_cursor = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">auto</span> next = <span class="built_in">calNext</span>(needle);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (h_cursor &lt; haystack_len)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (haystack[h_cursor] == needle[n_cursor])</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 相同的字符，共同向右滑动</span></span><br><span class="line">                ++h_cursor;</span><br><span class="line">                ++n_cursor;</span><br><span class="line">                <span class="keyword">if</span> (n_cursor == needle_len)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment">// needle指针滑到末尾，说明找到了第一个子串，在本题中可以直接返回！</span></span><br><span class="line">                    <span class="comment">// haystack指针也滑到haystack中匹配子串的末尾，因此要减去needle_len,</span></span><br><span class="line">                    <span class="comment">// 获取子串头在haystack中的索引</span></span><br><span class="line">                    <span class="keyword">return</span> h_cursor - needle_len;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 匹配到不相同的字符</span></span><br><span class="line">            <span class="comment">// 修改n_cursor，可以从这一行充分理解“next”这一变量名的含义</span></span><br><span class="line">            <span class="comment">// next[n_cursor]就表示下一个设置的n_cursor值</span></span><br><span class="line">            <span class="comment">// 原理：next[n_cursor]表示needle[0..(n_cursor - 1)]子串的最长相同前后缀长度</span></span><br><span class="line">            <span class="comment">// needle[n_cursor]与haystack[h_cursor]当前不相等，我们需要修改n_cursor，</span></span><br><span class="line">            <span class="comment">// 但是又不想从头开始比较，因此将n_cursor设置为前缀末尾+1的下标位置，继续比较</span></span><br><span class="line">            <span class="comment">// needle[n_cursor]与haystack[h_cursor]</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 举例理解： haystack = &quot;abababc&quot;, needle = &quot;ababc&quot;</span></span><br><span class="line">            <span class="comment">// 此时h_cursor=4, n_cursor=4</span></span><br><span class="line">            <span class="comment">// next[n_cursor] = 2，说明n_cursor前面子串&quot;abab&quot;的最长相同前后缀长度为2，</span></span><br><span class="line">            <span class="comment">// 因此n_cursor需要跳到前缀&quot;ab&quot;后面那个位置（因为前缀&quot;ab&quot;, 后缀&quot;ab&quot;已经比较过），也就是2</span></span><br><span class="line">            n_cursor = next[n_cursor];</span><br><span class="line">            <span class="keyword">if</span> (n_cursor == <span class="number">-1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 这里还有一种情况，说明之前n_cursor已经到0了</span></span><br><span class="line">                <span class="comment">// 说明跳到了从needle头开始比较的情况，</span></span><br><span class="line">                <span class="comment">// 需要同时向右移动n_cursor和h_cursor</span></span><br><span class="line">                ++n_cursor;</span><br><span class="line">                ++h_cursor;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 找不到子串，返回-1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+        </div>
+        <footer>
+            <p class="meta">
+                <span class="byline author vcard">Posted by <span class="fn">creeper12356</span></span>
+                <time datetime="2025-04-19T13:39:57.000Z" data-updated="true">Sat Apr 19 2025</time>
+                
+            </p>
+            <div class="sharing">
+    
+        <a class="twitter-share-button"
+           target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=KMP%E7%AE%97%E6%B3%95%EF%BC%88%E5%B8%A6%E8%A7%A3%E6%9E%90%EF%BC%89">
+            Tweet
+        </a>
+    
+</div>
+
+            <p class="meta">
+                
+
+                
+                <a class="basic-alignment right" href="/" title="Previous Post: 一点关于找实习的心态随感">一点关于找实习的心态随感 »</a>
+                
+            </p>
+        </footer>
+    </article>
+
+    
+
+</div>
+
+<aside class="sidebar">
+    <section class="odd">
+    <h1>Recent Posts</h1>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2025/04/19/KMP%E7%AE%97%E6%B3%95%EF%BC%88%E5%B8%A6%E8%A7%A3%E6%9E%90%EF%BC%89/">KMP算法（带解析）</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/04/12/%E4%B8%80%E7%82%B9%E5%85%B3%E4%BA%8E%E6%89%BE%E5%AE%9E%E4%B9%A0%E7%9A%84%E5%BF%83%E6%80%81%E9%9A%8F%E6%84%9F/">一点关于找实习的心态随感</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/10/27/%E8%A7%A3%E5%86%B3Windows%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E5%9C%A8Linux%E4%B8%8B%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/">解决Windows下zip压缩包在Linux下解压乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/08/25/%E4%BD%BF%E7%94%A8libGDX%E7%A7%BB%E6%A4%8D20%E5%B9%B4%E5%89%8D%E7%9A%84J2ME%E6%B8%B8%E6%88%8F%E3%80%8A%E4%B8%AD%E5%9B%BD%E8%B7%B3%E6%A3%8B%E3%80%8B/">使用libGDX移植20年前的J2ME游戏《中国跳棋》</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/08/18/Linux%E5%88%87%E6%8D%A2java%E7%89%88%E6%9C%AC/">Linux切换java版本</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/07/26/%E4%BD%BF%E7%94%A8Spring-Cloud-Feign%E6%9E%84%E5%BB%BA%E5%A3%B0%E6%98%8E%E5%BC%8F%E5%AE%A2%E6%88%B7%E7%AB%AF/">使用Spring Cloud Feign构建声明式客户端</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/07/07/%E6%B5%8B%E8%AF%95%E5%8F%91%E5%B8%83%E6%96%87%E7%AB%A0/">测试发布文章</a></li></ul>
+</section><section class="even">
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+        <li class="loading">Status updating&#8230;</li>
+    </ul>
+
+    <a target="_blank" rel="noopener" href="https://github.com/your_github">@your_github</a> on GitHub
+
+    <script>
+        $(document).ready(function(){
+            const options = {
+                user: 'your_github',
+                count: 0,
+                skip_forks: true,
+                target: '#gh_repos'
+            }
+
+            function escapeHtml(str) {
+                return $('<div/>').text(str).html();
+            }
+
+            function render(target, repos){
+                let i, fragment = '', t = $(target)[0];
+
+                for(i = 0; i < repos.length; i++) {
+                    fragment += '<li><a href="'+repos[i].html_url+'">'+repos[i].name+'</a><p>'+escapeHtml(repos[i].description||'')+'</p></li>';
+                }
+                t.innerHTML = fragment;
+            }
+
+            $.ajax({
+                url: "https://api.github.com/users/"+options.user+"/repos?sort=pushed&callback=?",
+                dataType: 'jsonp',
+                error: function (err) {
+                    $(options.target + ' li.loading').addClass('error').text("Error loading feed");
+                },
+                success: function(data) {
+                    var repos = [];
+                    if (!data || !data.data) { return; }
+                    for (var i = 0; i < data.data.length; i++) {
+                        if (options.skip_forks && data.data[i].fork) { continue; }
+                        repos.push(data.data[i]);
+                    }
+                    if (options.count) { repos.splice(options.count); }
+                    render(options.target, repos);
+                }
+            });
+        });
+    </script>
+</section>
+</aside>
+
+    </div>
+</div>
+
+<footer role="contentinfo">
+    <p>
+        Copyright © 2025 - creeper12356 -
+        <span class="credit">Generated using <a target="_blank" rel="noopener" href="https://github.com/jbreckmckye/hexo-theme-octo">Octo theme</a> for <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></span>
+    </p>
+</footer>
+
+
+
+</body>
+</html>

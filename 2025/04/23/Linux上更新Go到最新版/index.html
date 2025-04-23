@@ -6,7 +6,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="zh"><!--<![endif]-->
 <head>
     <meta charset="UTF-8">
-    <title>使用Spring Cloud Feign构建声明式客户端</title>
+    <title>Linux上更新Go到最新版</title>
 
     <meta name="author" content="creeper12356">
 
@@ -16,7 +16,7 @@
     <meta name="MobileOptimized" content="320">
     <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
 
-    <link rel="canonical" href="http://example.com/2024/07/26/使用Spring-Cloud-Feign构建声明式客户端/">
+    <link rel="canonical" href="http://example.com/2025/04/23/Linux上更新Go到最新版/">
 
     
         <link rel="alternate" href="/atom.xml" type="application/atom+xml">
@@ -111,32 +111,37 @@
         <div>
     <article class="hentry" role="article">
         <header>
-            <h1 class="entry-title">使用Spring Cloud Feign构建声明式客户端</h1>
+            <h1 class="entry-title">Linux上更新Go到最新版</h1>
             <p class="meta">
-                <time datetime="2024-07-26T02:20:50.000Z" data-updated="true">Fri Jul 26 2024</time>
+                <time datetime="2025-04-23T13:01:01.000Z" data-updated="true">Wed Apr 23 2025</time>
             </p>
         </header>
         <div class="entry-content">
-            <p>在使用Spring Boot开发微服务后端时，有时需要向其他微服务发起HTTP请求。如果使用传统的RestTemplate方法，先构造HTTP请求，再解析返回的HTTP响应，会产生很多冗余代码，降低项目的可读性。Spring Cloud Feign可以很好地解决这个问题。Feign是一种声明式、模板化的HTTP客户端，开发者只需要定义接口，便可以向调用本地方法一样调用远程接口，非常简洁方便。<br>此处Spring Boot项目使用maven构建，在<code>pom.xml</code>中加入依赖并安装：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>在Spring Boot的主文件中加入<code>@EnableFeignClients</code>注解：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableFeignClients</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UniGptBotServiceApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		SpringApplication.run(UniGptBotServiceApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>创建一个<code>client</code>目录，用于放置所有Feign客户端类，例如，我需要向微服务<code>user-service</code>发送远程请求，则创建一个<code>UserServiceClient</code>类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.unigpt.bot.client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.FeignClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.DeleteMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestHeader;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@FeignClient(name = &quot;user-service&quot;, url = &quot;http://localhost:8082/internal&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserServiceClient</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@DeleteMapping(&quot;/users/used-bots/&#123;botId&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteBotFromUsedList</span><span class="params">(</span></span><br><span class="line"><span class="params">            <span class="meta">@PathVariable</span> Integer botId,</span></span><br><span class="line"><span class="params">            <span class="meta">@RequestHeader(name = &quot;X-User-Id&quot;)</span> Integer userId)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>此处，我们定义了<code>UserServiceClient</code>接口，<code>@FeignClient</code>注解定义了服务的<strong>名称</strong>和<strong>url</strong>，接口的函数定义与controller类似，可以使用注解规定路径参数、请求参数、请求头、请求体信息。Feign会根据定义的接口和注解自动生成实现。</p>
-<p>定义完客户端接口类后，依赖注入<code>UserServiceClient</code>类，即可使用<code>deleteBotFromUsedList</code>方法，像调用本地方法一样调用远程服务。</p>
+            <p>检查当前Go版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go version</span><br></pre></td></tr></table></figure>
+
+<p>从<a target="_blank" rel="noopener" href="https://go.dev/dl/">Go官方下载页面</a>获取最新版本的<code>tar.gz</code>包，如<code>go1.24.2.linux-amd64.tar.gz</code>。</p>
+<p>删除旧版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -rf /usr/local/go</span><br></pre></td></tr></table></figure>
+
+<p>解压新版本到<code>/usr/local</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> tar -C /usr/local -xzf go1.24.2.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>再次输入:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go version</span><br></pre></td></tr></table></figure>
+<p>验证是否更新到最新版。</p>
 
         </div>
         <footer>
             <p class="meta">
                 <span class="byline author vcard">Posted by <span class="fn">creeper12356</span></span>
-                <time datetime="2024-07-26T02:20:50.000Z" data-updated="true">Fri Jul 26 2024</time>
+                <time datetime="2025-04-23T13:01:01.000Z" data-updated="true">Wed Apr 23 2025</time>
                 
             </p>
             <div class="sharing">
     
         <a class="twitter-share-button"
-           target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=%E4%BD%BF%E7%94%A8Spring%20Cloud%20Feign%E6%9E%84%E5%BB%BA%E5%A3%B0%E6%98%8E%E5%BC%8F%E5%AE%A2%E6%88%B7%E7%AB%AF">
+           target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=Linux%E4%B8%8A%E6%9B%B4%E6%96%B0Go%E5%88%B0%E6%9C%80%E6%96%B0%E7%89%88">
             Tweet
         </a>
     
@@ -144,11 +149,9 @@
 
             <p class="meta">
                 
-                <a class="basic-alignment left" href="/" title="Previous Post: Linux切换java版本">« Linux切换java版本</a>
-                
 
                 
-                <a class="basic-alignment right" href="/" title="Previous Post: 测试发布文章">测试发布文章 »</a>
+                <a class="basic-alignment right" href="/" title="Previous Post: KMP算法（带解析）">KMP算法（带解析） »</a>
                 
             </p>
         </footer>
